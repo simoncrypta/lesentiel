@@ -1,15 +1,5 @@
-# solid
+# lesentiel
 
-To install dependencies:
+This project is a local first Terminal experience. 
 
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun dev
-```
-
-This project was created using `bun create tui`. [create-tui](https://git.new/create-tui) is the easiest way to get started with OpenTUI.
+The goal it too take any purchase receipts and give enchance standarize data for each item.

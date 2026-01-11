@@ -1,5 +1,5 @@
 {
-  "name": "my-opentui-project",
+  "name": "lesentiel",
   "module": "src/index.tsx",
   "type": "module",
   "private": true,
