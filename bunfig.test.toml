@@ -1,0 +1,6 @@
+[test]
+# Preload SolidJS preload for JSX support in tests
+preload = ["@opentui/solid/preload"]
+
+# Run tests concurrently for better performance
+concurrent = true
