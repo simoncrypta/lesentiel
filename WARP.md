@@ -4,7 +4,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-This is an OpenTUI project built with SolidJS and Bun. OpenTUI is a framework for building terminal user interfaces (TUIs) using a React-like JSX syntax with flexbox layout.
+This is a local-first terminal receipt management application built with OpenTUI, SolidJS, and Bun. The app allows users to drag-and-drop files into a terminal UI to move them to a centralized `~/receipts` directory. OpenTUI is a framework for building terminal user interfaces (TUIs) using a React-like JSX syntax with flexbox layout.
 
 ## Development Commands
 
@@ -18,6 +18,17 @@ bun install
 bun dev
 ```
 Runs the TUI application with hot-reload enabled via `--watch` flag.
+
+### Testing
+```bash
+bun test
+```
+Runs all tests using Bun's native test runner with concurrent execution.
+
+To run a specific test file:
+```bash
+bun test src/utils/fileParser.test.ts
+```
 
 ### TypeScript Type Checking
 ```bash
@@ -77,6 +88,16 @@ render(() => (
 ### Entry Point
 The main entry point is `src/index.tsx`, which calls `render()` from `@opentui/solid`.
 
+### Application Architecture
+- **Main Component** (`src/index.tsx`): Renders the TUI with receipt list and drag-and-drop handling
+- **File Parser** (`src/utils/fileParser.ts`): Parses pasted text to extract file paths, handling various formats (file:// URLs, quoted paths, escaped spaces)
+- **Receipt Manager** (`src/utils/receipts.ts`): Manages the `~/receipts` directory, handles file moving and directory creation
+
+### Key Patterns
+- **Drag-and-Drop**: Uses OpenTUI's `usePaste()` hook to capture paste events when files are dragged from Finder
+- **SolidJS Reactivity**: Uses `createSignal()` for state management and `For` component for rendering lists
+- **File Operations**: All file I/O uses Bun's native APIs (`Bun.file()`, `Bun.write()`, `Bun.Glob()`)
+
 ### Layout
 - Use flexbox properties on `<box>` elements for layout
 - Common props: `flexGrow`, `alignItems`, `justifyContent`, `flexDirection`
@@ -98,10 +119,18 @@ Configures Bun's preload behavior for OpenTUI Solid. Required for proper JSX han
 - Allows importing `.ts`/`.tsx` extensions directly
 
 ## Testing
-Currently no test framework is configured. When adding tests, consider:
-- `bun:test` for native Bun testing
-- `vitest` for compatibility with Vite ecosystem
-- `@solidjs/testing-library` for component testing
+The project uses Bun's native test runner (`bun:test`).
+
+### Test Structure
+- Tests are colocated with source files (e.g., `fileParser.test.ts` next to `fileParser.ts`)
+- Uses `describe`, `it`, `expect`, `beforeEach`, `afterEach` from `bun:test`
+- Tests run concurrently by default (configured in `bunfig.test.toml`)
+
+### File Testing Patterns
+Tests that create temporary files should:
+- Use `/tmp/` directory for test files
+- Clean up in `afterEach` hooks using `Bun.spawn(["rm", file])`
+- Track created files in an array for cleanup
 
 ## Common Pitfalls
 
