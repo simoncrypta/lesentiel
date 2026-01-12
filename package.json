@@ -15,9 +15,13 @@
   "dependencies": {
     "@babel/core": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
+    "@langchain/community": "^1.1.3",
+    "@langchain/core": "^1.1.12",
+    "@langchain/textsplitters": "^1.0.1",
     "@opentui/core": "^0.1.69",
     "@opentui/solid": "^0.1.69",
     "babel-preset-solid": "1.9.9",
+    "openai": "^6.16.0",
     "solid-js": "1.9.9"
   }
 }
