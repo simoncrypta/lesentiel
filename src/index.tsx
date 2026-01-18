@@ -1,8 +1,8 @@
-import { TextAttributes } from "@opentui/core";
 import { render, usePaste } from "@opentui/solid";
-import { createSignal, onMount, For } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import { ensureReceiptsDir, moveFileToReceipts, getReceiptsDir } from "./utils/receipts.ts";
 import { parseFilePaths } from "./utils/fileParser.ts";
+import { AppLayout } from "./components/AppLayout.tsx";
 
 function App() {
   const [receipts, setReceipts] = createSignal<string[]>([]);
@@ -65,35 +65,7 @@ function App() {
     setTimeout(() => setFooterText("Drag & drop files here to add them to ~/receipts"), 3000);
   });
 
-  return (
-    <box flexDirection="column" flexGrow={1} padding={2}>
-      {/* Header */}
-      <box marginBottom={2}>
-        <ascii_font font="tiny" text="Receipt Manager" />
-      </box>
-
-      {/* Receipts List */}
-      <box border={true} padding={1} flexGrow={1} flexDirection="column">
-        <text attributes={TextAttributes.BOLD} marginBottom={1}>
-          Receipts ({receipts().length}):
-        </text>
-        {receipts().length > 0 ? (
-          <For each={receipts()}>
-            {(filename) => <text attributes={TextAttributes.DIM}>{filename}</text>}
-          </For>
-        ) : (
-          <text attributes={TextAttributes.DIM}>No receipts yet</text>
-        )}
-      </box>
-
-      {/* Dynamic Footer */}
-      <box position="absolute" bottom={1} left={2} right={2}>
-        <text attributes={TextAttributes.DIM}>
-          {footerText()}
-        </text>
-      </box>
-    </box>
-  );
+  return <AppLayout receipts={receipts()} footerMessage={footerText()} />;
 }
 
 // Render the app
