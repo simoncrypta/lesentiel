@@ -1,4 +1,4 @@
-# WARP.md
+# CLAUDE.md
 
 > **⚠️ This file is a quick reference. For complete coding guidelines, see [AGENTS.md](./AGENTS.md)**
 
@@ -13,14 +13,19 @@ bun test src/utils/fileParser.test.ts  # Run specific test
 bun run tsc --noEmit              # Type check
 ```
 
+## Three-Layer Architecture
+1. **Main App** (`src/index.tsx`) - State management, orchestration, drag-and-drop
+2. **Components** (`src/components/`) - UI layout (Header, Footer, ReceiptList, AppLayout)
+3. **Utils** (`src/utils/`) - File operations (fileParser.ts, receipts.ts)
+
 ## Essential Guidelines
-- **Architecture**: See [Application Architecture](./AGENTS.md#application-architecture)
+- **Architecture Details**: See [Application Architecture](./AGENTS.md#application-architecture)
 - **OpenTUI Patterns**: See [OpenTUI-Specific Best Practices](./AGENTS.md#opentui-specific-best-practices)
 - **Code Style**: See [Code Style Guidelines](./AGENTS.md#code-style-guidelines)
 - **Common Mistakes**: See [Common Pitfalls](./AGENTS.md#common-pitfalls)
 
-## Key Points for WARP
-- Runtime: Bun (not Node.js)
+## Key Points for Claude Code
+- Runtime: Bun (not Node.js) - use `Bun.file()`, `Bun.write()`, `Bun.Glob()`, `Bun.spawn()`
 - UI Framework: OpenTUI + SolidJS (not React)
-- Component naming: Use underscores (`<ascii_font>` not `<ascii-font>`)
-- Exit handling: Use `renderer.destroy()` not `process.exit()`
+- Signals: Always call with `()` - `receipts()` not `receipts`
+- Props: Don't destructure - use `props.value` not `{ value } = props`
